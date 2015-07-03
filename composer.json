@@ -1,0 +1,18 @@
+{
+    "name": "pmvc-plugin/debug_console",
+    "description": "pmvc debug_console",
+    "type": "library",
+    "homepage": "https://github.com/pmvc-plugin/debug_console",
+    "keywords": ["debug", "pmvc", "plug-in"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hill",
+            "email": "hill@kimo.com"
+        }
+    ],
+    "require": {
+        "pmvc-plugin/asset": "*"
+    },
+    "minimum-stability": "dev"
+}
