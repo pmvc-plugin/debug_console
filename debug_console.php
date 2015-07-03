@@ -19,6 +19,11 @@ class debug_console extends p\PlugIn
         return $static;
     }
 
+    public function escape($string)
+    {
+        return strtr($string, array('\\'=>'\\\\',"'"=>"\'",'"'=>'\"',"\r"=>'\\r',"\n"=>'\\n','</'=>'<\/'));
+    }
+
     public function dump($p,$type='info'){
         $json_str = json_encode($p);
         if(!p\exists('asset','plugIn')){
