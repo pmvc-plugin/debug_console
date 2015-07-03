@@ -4,9 +4,9 @@
 [![License](https://poser.pugx.org/pmvc-plugin/debug_console/license)](https://packagist.org/packages/pmvc-plugin/debug_console)
 [![Total Downloads](https://poser.pugx.org/pmvc-plugin/debug_console/downloads)](https://packagist.org/packages/pmvc-plugin/debug_console) 
 
-# PMVC Debug Console
-Use browser console show debug message
+PMVC Debug Console
 ===============
+Use browser console show debug message
 
 ## Install with Composer
 ### 1. Download composer
