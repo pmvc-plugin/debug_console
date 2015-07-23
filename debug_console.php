@@ -21,7 +21,7 @@ class debug_console extends p\PlugIn
 
     public function escape($string)
     {
-        if (!empty($string)) {
+        if (\PMVC\n($string,'string')) {
             return strtr($string, array('\\'=>'\\\\',"'"=>"\'",'"'=>'\"',"\r"=>'\\r',"\n"=>'\\n','</'=>'<\/'));
         }
     }
