@@ -8,6 +8,9 @@ PMVC Debug Console
 ===============
 Use browser console show debug message
 
+## JS Library
+http://ddo.github.io/dlog
+
 ## Install with Composer
 ### 1. Download composer
    * mkdir test_folder
