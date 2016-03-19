@@ -1,9 +1,12 @@
 <?php
-namespace PMVC\PlugIn\debug_console;
+namespace PMVC\PlugIn\debug;
 use PMVC as p;
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\debug_console';
+p\initPlugin(['debug'=>null]);
 
-class debug_console extends p\PlugIn
+class debug_console
+    extends p\PlugIn
+    implements DebugDumpInterface
 {
 
     private $bInitJs=false;

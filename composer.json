@@ -12,7 +12,8 @@
         }
     ],
     "require": {
-        "pmvc-plugin/asset": "*"
+        "pmvc-plugin/asset": "*",
+        "pmvc-plugin/debug": "*"
     },
     "minimum-stability": "dev"
 }
