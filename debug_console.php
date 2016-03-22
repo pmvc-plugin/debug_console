@@ -24,7 +24,7 @@ class debug_console
 
     public function escape($string)
     {
-        if (\PMVC\n($string,'string')) {
+        if (!empty($string) && is_string($string)) {
             return strtr($string, array('\\'=>'\\\\',"'"=>"\'",'"'=>'\"',"\r"=>'\\r',"\n"=>'\\n','</'=>'<\/'));
         }
     }
