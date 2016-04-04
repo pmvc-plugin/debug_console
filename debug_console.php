@@ -17,7 +17,7 @@ class debug_console
         }
         $this->bInitJs=true;
         $static=p\plug('asset');
-        $static->importJs('http://i.intw.tw/lib/dlog/dlog.min.js');
+        $static->importJs('http://i.intw.tw/lib/dlog/dlog.min.1.js');
         $static->js("var log = new dlog({ level: 'trace'});");
         return $static;
     }
