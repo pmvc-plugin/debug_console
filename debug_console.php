@@ -25,7 +25,10 @@ class debug_console
     public function escape($string)
     {
         if (!empty($string) && is_string($string)) {
-            return strtr(utf8_encode($string), array('\\'=>'\\\\',"'"=>"\'",'"'=>'\"',"\r"=>'\\r',"\n"=>'\\n','</'=>'<\/'));
+            if (!mb_detect_encoding($string,'utf-8',true)) {
+                $string = utf8_encode($string);
+            }
+            return strtr($string, array('\\'=>'\\\\',"'"=>"\'",'"'=>'\"',"\r"=>'\\r',"\n"=>'\\n','</'=>'<\/'));
         }
     }
 
