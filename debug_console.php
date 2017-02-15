@@ -25,7 +25,7 @@ class debug_console
     public function escape($string)
     {
         if (!empty($string) && is_string($string)) {
-            return strtr($string, array('\\'=>'\\\\',"'"=>"\'",'"'=>'\"',"\r"=>'\\r',"\n"=>'\\n','</'=>'<\/'));
+            return strtr(utf8_encode($string), array('\\'=>'\\\\',"'"=>"\'",'"'=>'\"',"\r"=>'\\r',"\n"=>'\\n','</'=>'<\/'));
         }
     }
 
