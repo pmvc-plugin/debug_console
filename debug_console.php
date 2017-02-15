@@ -30,9 +30,13 @@ class debug_console
     }
 
     public function dump($p,$type=null){
+        $debug = \PMVC\plug('debug');
+        if (!$debug->isShow($type, $this['level'])) {
+            return;
+        }
         $json_str = json_encode($p);
         $static = $this->getStatic();
-        if (!\PMVC\plug('debug')->getLevel($type, null)) {
+        if (!$debug->getLevel($type, null)) {
             $type = 'info';
         }
         $static->js("log.".$type."(".$json_str.")"); 
