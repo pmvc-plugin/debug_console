@@ -39,7 +39,7 @@ class debug_console
         }
         $json_str = json_encode($p);
         $static = $this->getStatic();
-        if (!$debug->getLevel($type, null)) {
+        if (!$debug->levelToInt($type, null)) {
             $type = 'info';
         }
         $static->js("log.".$type."(".$json_str.")"); 
