@@ -9,17 +9,22 @@ class debug_console
     implements DebugDumpInterface
 {
 
-    private $bInitJs=false;
+    private $_isJsLoaded=false;
 
-    private function getStatic(){
-        if($this->bInitJs){
-            return p\plug('asset');
-        }
-        $this->bInitJs=true;
+    private function _getStatic(){
         $static=p\plug('asset');
-        $static->importJs('//cdn-htlovestory.netdna-ssl.com/lib/dlog/dlog.min.1.js');
+        if($this->_isJsLoaded){
+            return $static;
+        }
+        $this->_isJsLoaded=true;
+        $static->importJs($this['js']);
         $static->js("var log = new dlog({ level: 'trace'});");
         return $static;
+    }
+
+    public function init()
+    {
+        $this['js'] = '//cdn-htlovestory.netdna-ssl.com/cdn/cdn.js?lib/dlog/dlog.js';
     }
 
     public function escape($string)
@@ -38,7 +43,7 @@ class debug_console
             return;
         }
         $json_str = json_encode($p);
-        $static = $this->getStatic();
+        $static = $this->_getStatic();
         if (!$debug->levelToInt($type, null)) {
             $type = 'info';
         }
