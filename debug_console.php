@@ -18,13 +18,15 @@ class debug_console
         }
         $this->_isJsLoaded=true;
         $static->importJs($this['js']);
-        $static->js("var log = new dlog({ level: 'trace'});");
+        $static->js("var log = new dlog({ level: 'trace', name: 'PMVC'});");
         return $static;
     }
 
     public function init()
     {
-        $this['js'] = '//cdn-htlovestory.netdna-ssl.com/cdn/cdn.js?lib/dlog/dlog.js';
+        if (!isset($this['js'])) {
+            $this['js'] = '//cdn.jsdelivr.net/npm/organism-react-ajax/build/src/lib/dlog.min.js';
+        }
     }
 
     public function escape($string)
@@ -45,9 +47,10 @@ class debug_console
         $json_str = json_encode($p);
         $static = $this->_getStatic();
         if (!$debug->levelToInt($type, null)) {
-            $type = 'info';
+            $static->js("log.show('".$type."',[".$json_str."])"); 
+        } else {
+            $static->js("log.".$type."(".$json_str.")"); 
         }
-        $static->js("log.".$type."(".$json_str.")"); 
         $static->echoJs();
     }
 }
