@@ -25,7 +25,8 @@ class debug_console
     public function init()
     {
         if (!isset($this['js'])) {
-            $this['js'] = '//cdn.jsdelivr.net/npm/organism-react-ajax/build/src/lib/dlog.min.js';
+            $this['js'] =
+                '//cdn.jsdelivr.net/npm/organism-react-ajax@latest/build/src/lib/dlog.min.js';
         }
     }
 
