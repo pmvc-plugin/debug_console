@@ -45,13 +45,14 @@ class debug_console
         if (!$debug->isShow($type, $this['level'])) {
             return;
         }
-        $json_str = json_encode($p);
+        $strJson = json_encode($p);
         $static = $this->_getStatic();
         if (!$debug->levelToInt($type, null)) {
-            $static->js("log.show('".$type."',[".$json_str."])"); 
+            $static->js("log.show('".$type."',[".$strJson."])"); 
         } else {
-            $static->js("log.".$type."(".$json_str.")"); 
+            $static->js("log.".$type."(".$strJson.")"); 
         }
+        unset($strJson, $p, $type);
         $static->echoJs();
     }
 }
