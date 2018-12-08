@@ -5,6 +5,12 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
 {
     private $_plug = 'debug_console';
 
+    public function setup()
+    {
+      \PMVC\unplug($this->_plug);
+      \PMVC\unplug('debug');
+    }
+
     function testDebugConsole()
     {
         ob_start();
@@ -19,8 +25,10 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
     {
         $plug = PMVC\plug($this->_plug);
         \PMVC\plug('debug', ['output'=>$plug]);
-        ob_start();
         \PMVC\d('aaa');
+        \PMVC\plug('asset', ['flush'=>false]);
+        ob_start();
+        $plug->onB4ProcessView();
         $output = ob_get_contents();
         ob_end_clean();
         $this->assertContains('aaa',$output);
