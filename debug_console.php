@@ -13,7 +13,6 @@ class debug_console
 {
 
     private $_isJsLoaded=false;
-    private $_isReady=false;
     private $_tmp = [];
 
     private function _getStatic(){
@@ -53,7 +52,7 @@ class debug_console
 
     public function onB4ProcessView()
     {
-      $this->_isReady=true;
+      $this['isReady']=true;
       if (count($this->_tmp)) {
         $console = \PMVC\plug('debug')->getOutput();
         foreach ($this->_tmp as $a) {
@@ -65,6 +64,7 @@ class debug_console
 
     public function onFinish()
     {
+      $this['isReady']=true;
       if (count($this->_tmp)) {
         $console = \PMVC\plug('debug')->getOutput();
         foreach ($this->_tmp as $a) {
@@ -76,6 +76,7 @@ class debug_console
 
     public function __destruct()
     {
+      $this['isReady']=true;
       if (count($this->_tmp)) {
         foreach ($this->_tmp as $a) {
           $this->dump($a[1], $a[0]); 
@@ -100,12 +101,12 @@ class debug_console
       return;
     }
 
-    public function dump($p,$type=null){
+    public function dump($p,$type=null) {
         $debug = \PMVC\plug('debug');
         if (!$debug->isShow($type, $this['level'])) {
             return;
         }
-        if (!$this->_isReady) {
+        if (!$this['isReady']) {
           $this->_tmp[] = [$type, $p];
           return;
         }
