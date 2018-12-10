@@ -50,38 +50,33 @@ class debug_console
         );
     }
 
-    public function onB4ProcessView()
+    private function _flush($console = null)
     {
       $this['isReady']=true;
       if (count($this->_tmp)) {
-        $console = \PMVC\plug('debug')->getOutput();
+        if (!$console) {
+          $console = \PMVC\plug('debug')->getOutput();
+        }
         foreach ($this->_tmp as $a) {
           $console->dump($a[1], $a[0]); 
         }
         $this->_tmp = [];
       }
+    }
+
+    public function onB4ProcessView()
+    {
+      $this->_flush();
     }
 
     public function onFinish()
     {
-      $this['isReady']=true;
-      if (count($this->_tmp)) {
-        $console = \PMVC\plug('debug')->getOutput();
-        foreach ($this->_tmp as $a) {
-          $console->dump($a[1], $a[0]); 
-        }
-        $this->_tmp = [];
-      }
+      $this->_flush();
     }
 
     public function __destruct()
     {
-      $this['isReady']=true;
-      if (count($this->_tmp)) {
-        foreach ($this->_tmp as $a) {
-          $this->dump($a[1], $a[0]); 
-        }
-      }
+      $this->_flush($this);
     }
 
     public function escape($string)
