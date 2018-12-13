@@ -15,17 +15,6 @@ class debug_console
     private $_isJsLoaded=false;
     private $_tmp = [];
 
-    private function _getStatic(){
-        $static=p\plug('asset');
-        if($this->_isJsLoaded){
-            return $static;
-        }
-        $this->_isJsLoaded=true;
-        $static->importJs($this['js']);
-        $static->js("var log = new dlog({ level: 'trace', name: 'PMVC'});");
-        return $static;
-    }
-
     public function init()
     {
         if (!isset($this['js'])) {
@@ -37,9 +26,23 @@ class debug_console
           $dispatcher->attach($this, Event\B4_PROCESS_VIEW);
           $dispatcher->attach($this, Event\FINISH);
         } else {
-          $this['isReady']=true;
+          if (!isset($this['isReady'])) {
+            $this['isReady']=true;
+          }
         }
     }
+
+    private function _getStatic(){
+        $static=p\plug('asset');
+        if($this->_isJsLoaded){
+            return $static;
+        }
+        $this->_isJsLoaded=true;
+        $static->importJs($this['js']);
+        $static->js("var log = new dlog({ level: 'trace', name: 'PMVC'});");
+        return $static;
+    }
+
 
     private function _flush($console = null)
     {
