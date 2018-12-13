@@ -32,22 +32,13 @@ class debug_console
             $this['js'] =
                 '//cdn.jsdelivr.net/npm/organism-react-ajax@latest/build/src/lib/dlog.min.js';
         }
-        p\callPlugin(
-            'dispatcher',
-            'attach',
-            [
-                $this,
-                Event\B4_PROCESS_VIEW,
-            ]
-        );
-        p\callPlugin(
-            'dispatcher',
-            'attach',
-            [
-                $this,
-                Event\FINISH,
-            ]
-        );
+        if (\PMVC\exists('dispatcher', 'plug')) {
+          $dispatcher = \PMVC\plug('dispatcher');
+          $dispatcher->attach($this, Event\B4_PROCESS_VIEW);
+          $dispatcher->attach($this, Event\FINISH);
+        } else {
+          $this['isReady']=true;
+        }
     }
 
     private function _flush($console = null)

@@ -33,4 +33,10 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
         ob_end_clean();
         $this->assertContains('aaa',$output);
     }
+
+    public function testDefaultLevel()
+    {
+        $p = PMVC\plug($this->_plug);
+        $this->assertEquals($p['level'], null);
+    }
 }
