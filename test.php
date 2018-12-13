@@ -6,7 +6,9 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
 
     public function setup()
     {
-      PMVC\addPlugInFolders(['../']);
+        PMVC\addPlugInFolders(['../', './vendor/pmvc-plugin']);
+        \PMVC\plug('debug', ['output'=>$this->_plug]);
+        \PMVC\plug('asset', ['flush'=>false]);
     }
 
     public function teardown()
@@ -28,10 +30,8 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
 
     function testDump()
     {
-        $plug = PMVC\plug($this->_plug);
-        \PMVC\plug('debug', ['output'=>$plug]);
+        $plug = PMVC\plug($this->_plug, ['isReady' => false]);
         \PMVC\d('aaa');
-        \PMVC\plug('asset', ['flush'=>false]);
         ob_start();
         $plug->onB4ProcessView();
         $output = ob_get_contents();
@@ -49,18 +49,18 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
     {
         \PMVC\folders(_PLUGIN, [], [], true);
         $p = PMVC\plug($this->_plug, [_PLUGIN_FILE=>'./debug_console.php']);
-        $this->assertEquals($p['isReady'], true);
+        $this->assertEquals(true, $p['isReady']);
     }
 
     public function testAutoIsNotReady()
     {
         $p = PMVC\plug($this->_plug, ['isReady' => false]);
-        $this->assertEquals($p['isReady'], false);
+        $this->assertEquals(false, $p['isReady']);
     }
 
     public function testDefaultIsReady()
     {
         $p = PMVC\plug($this->_plug);
-        $this->assertEquals($p['isReady'], null);
+        $this->assertEquals(true, $p['isReady']);
     }
 }
