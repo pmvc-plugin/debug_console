@@ -1,12 +1,18 @@
 <?php
-PMVC\Load::plug();
+namespace PMVC\PlugIn\debug;
+
+use PHPUnit_Framework_TestCase;
+
+\PMVC\Load::plug();
+\PMVC\addPlugInFolders(['../']);
+
+
 class DebugConsoleTest extends PHPUnit_Framework_TestCase
 {
     private $_plug = 'debug_console';
 
     public function setup()
     {
-        PMVC\addPlugInFolders(['../', './vendor/pmvc-plugin']);
         \PMVC\plug('debug', ['output'=>$this->_plug]);
         \PMVC\plug('asset', ['flush'=>false]);
     }
@@ -21,7 +27,7 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
     function testDebugConsole()
     {
         ob_start();
-        $plug = PMVC\plug($this->_plug);
+        $plug = \PMVC\plug($this->_plug);
         print_r($plug);
         $output = ob_get_contents();
         ob_end_clean();
@@ -30,7 +36,7 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
 
     function testDump()
     {
-        $plug = PMVC\plug($this->_plug, ['isReady' => false]);
+        $plug = \PMVC\plug($this->_plug, ['isReady' => false]);
         \PMVC\d('aaa');
         ob_start();
         $plug->onB4ProcessView();
@@ -41,26 +47,28 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
 
     public function testDefaultLevel()
     {
-        $p = PMVC\plug($this->_plug);
+        $p = \PMVC\plug($this->_plug);
         $this->assertEquals($p['level'], null);
     }
 
     public function testAutoIsReady()
     {
-        \PMVC\folders(_PLUGIN, [], [], true);
-        $p = PMVC\plug($this->_plug, [_PLUGIN_FILE=>'./debug_console.php']);
+        $old = \PMVC\value(\PMVC\folders(_PLUGIN), ['folders']);
+        $folders = \PMVC\folders(_PLUGIN, [], [], true);
+        $p = \PMVC\plug($this->_plug, [_PLUGIN_FILE=>'./debug_console.php']);
         $this->assertEquals(true, $p['isReady']);
+        \PMVC\addPlugInFolders($old);
     }
 
     public function testAutoIsNotReady()
     {
-        $p = PMVC\plug($this->_plug, ['isReady' => false]);
+        $p = \PMVC\plug($this->_plug, ['isReady' => false]);
         $this->assertEquals(false, $p['isReady']);
     }
 
     public function testDefaultIsReady()
     {
-        $p = PMVC\plug($this->_plug);
+        $p = \PMVC\plug($this->_plug);
         $this->assertEquals(true, $p['isReady']);
     }
 }
