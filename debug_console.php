@@ -19,22 +19,23 @@ class debug_console
     {
         if (!isset($this['js'])) {
             $this['js'] =
-                '//cdn.jsdelivr.net/npm/organism-react-ajax@latest/build/src/lib/dlog.min.js';
+                '//cdn.jsdelivr.net/npm/organism-react-ajax@0.6.7/build/dlog.min.js';
         }
         if (\PMVC\exists('dispatcher', 'plug')) {
-          $dispatcher = \PMVC\plug('dispatcher');
-          $dispatcher->attach($this, Event\B4_PROCESS_VIEW);
-          $dispatcher->attach($this, Event\FINISH);
+            $dispatcher = \PMVC\plug('dispatcher');
+            $dispatcher->attach($this, Event\B4_PROCESS_VIEW);
+            $dispatcher->attach($this, Event\FINISH);
         } else {
-          if (!isset($this['isReady'])) {
-            $this['isReady']=true;
-          }
+            if (!isset($this['isReady'])) {
+                $this['isReady']=true;
+            }
         }
     }
 
-    private function _getStatic(){
+    private function _getStatic()
+    {
         $static=p\plug('asset');
-        if($this->_isJsLoaded){
+        if($this->_isJsLoaded) {
             return $static;
         }
         $this->_isJsLoaded=true;
@@ -46,58 +47,60 @@ class debug_console
 
     private function _flush($console = null)
     {
-      $this['isReady']=true;
-      if (count($this->_tmp)) {
-        if (!$console) {
-          $console = \PMVC\plug('debug')->getOutput();
+        $this['isReady']=true;
+        if (count($this->_tmp)) {
+            if (!$console) {
+                $console = \PMVC\plug('debug')->getOutput();
+            }
+            foreach ($this->_tmp as $a) {
+                $console->dump($a[1], $a[0]); 
+            }
+            $this->_tmp = [];
         }
-        foreach ($this->_tmp as $a) {
-          $console->dump($a[1], $a[0]); 
-        }
-        $this->_tmp = [];
-      }
     }
 
     public function onB4ProcessView()
     {
-      $this->_flush();
+        $this->_flush();
     }
 
     public function onFinish()
     {
-      $this->_flush();
+        $this->_flush();
     }
 
     public function __destruct()
     {
-      $this->_flush($this);
+        $this->_flush($this);
     }
 
     public function escape($string)
     {
         if (!empty($string) && is_string($string)) {
-            if (!mb_detect_encoding($string,'utf-8',true)) {
+            if (!mb_detect_encoding($string, 'utf-8', true)) {
                 $string = utf8_encode($string);
             }
             return strtr($string, array('\\'=>'\\\\',"'"=>"\'",'"'=>'\"',"\r"=>'\\r',"\n"=>'\\n','</'=>'<\/'));
         }
     }
 
-    protected function __dump($s) {
+    protected function __dump($s)
+    {
         $static = $this->_getStatic();
         $static->js($s);
         $static->echoJs();
-      return;
+        return;
     }
 
-    public function dump($p,$type=null) {
+    public function dump($p,$type=null)
+    {
         $debug = \PMVC\plug('debug');
         if (!$debug->isShow($type, $this['level'])) {
             return;
         }
         if (!$this['isReady']) {
-          $this->_tmp[] = [$type, $p];
-          return;
+            $this->_tmp[] = [$type, $p];
+            return;
         }
         $strJson = json_encode($p);
         if (!$debug->levelToInt($type, null)) {
