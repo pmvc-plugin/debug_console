@@ -19,7 +19,7 @@ class debug_console
     {
         if (!isset($this['js'])) {
             $this['js'] =
-                'https://cdn.jsdelivr.net/npm/organism-react-ajax@0.6.8/build/dlog.min.js';
+                'https://cdn.jsdelivr.net/npm/organism-react-ajax@0.6.13/build/dlog.min.js';
         }
         if (\PMVC\exists('dispatcher', 'plug')) {
             $dispatcher = \PMVC\plug('dispatcher');
