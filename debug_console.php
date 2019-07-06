@@ -39,6 +39,7 @@ class debug_console
             return $static;
         }
         $this->_isJsLoaded=true;
+        echo '<!-- "> -->'; //hack for fixed unclose tag
         $static->importJs($this['js']);
         $static->js("var log = new dlog({ level: 'trace', name: 'PMVC'});");
         return $static;
