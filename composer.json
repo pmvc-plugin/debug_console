@@ -12,8 +12,8 @@
         }
     ],
     "require": {
-        "ext-mbstring": "*",
         "pmvc-plugin/asset": "*",
+        "pmvc-plugin/utf8": "*",
         "pmvc-plugin/debug": "*"
     },
     "minimum-stability": "dev"
