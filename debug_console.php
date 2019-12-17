@@ -81,7 +81,7 @@ class debug_console
             if (!$pUtf8->detectEncoding($string, 'utf-8', true)) {
                 $string = $pUtf8->utf8Encode($string);
             }
-            return strtr($string, ['"'=>'\"',"\r"=>'\\r','</'=>'<\/']);
+            return strtr($string, ["\r"=>'\\r','</'=>'<\/']);
         }
     }
 
