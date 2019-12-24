@@ -79,7 +79,7 @@ class debug_console
         if (!empty($string) && is_string($string)) {
             $pUtf8 = \PMVC\plug('utf8');
             if (!$pUtf8->detectEncoding($string, 'utf-8', true)) {
-                $string = $pUtf8->utf8Encode($string);
+                $string = $pUtf8->convertEncoding($string, 'utf-8');
             }
             return strtr($string, ["\r"=>'\\r','</'=>'<\/']);
         }
