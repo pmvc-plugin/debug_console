@@ -4,7 +4,7 @@ namespace PMVC\PlugIn\debug;
 use PHPUnit_Framework_TestCase;
 
 \PMVC\Load::plug();
-\PMVC\addPlugInFolders(['../']);
+\PMVC\addPlugInFolders([__DIR__.'/../']);
 
 
 class DebugConsoleTest extends PHPUnit_Framework_TestCase

@@ -105,7 +105,7 @@ class debug_console
             $this->_tmp[] = [$type, $p];
             return;
         }
-        $strJson = json_encode(\PMVC\utf8Dump($p));
+        $strJson = \PMVC\utf8JsonEncode($p);
         if (!$debug->levelToInt($type, null)) {
             $this->__dump("log.show('".$type."',[".$strJson."])"); 
         } else {
