@@ -23,7 +23,7 @@ class debug_console
         }
         if (\PMVC\exists('dispatcher', 'plug')) {
             $dispatcher = \PMVC\plug('dispatcher');
-            $dispatcher->attach($this, Event\B4_PROCESS_VIEW);
+            $dispatcher->attach($this, Event\WILL_PROCESS_VIEW);
             $dispatcher->attach($this, Event\FINISH);
         } else {
             if (!isset($this['isReady'])) {
@@ -59,7 +59,7 @@ class debug_console
         }
     }
 
-    public function onB4ProcessView()
+    public function onWillProcessView()
     {
         $this->_flush();
     }

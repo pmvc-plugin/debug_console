@@ -39,7 +39,7 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
         $plug = \PMVC\plug($this->_plug, ['isReady' => false]);
         \PMVC\d('aaa');
         ob_start();
-        $plug->onB4ProcessView();
+        $plug->onWillProcessView();
         $output = ob_get_contents();
         ob_end_clean();
         $this->assertContains('aaa',$output);
