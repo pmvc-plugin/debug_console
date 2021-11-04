@@ -16,5 +16,8 @@
         "pmvc-plugin/utf8": "*",
         "pmvc-plugin/debug": "*"
     },
+    "require-dev": {
+        "pmvc-plugin/unit": "*"
+    },
     "minimum-stability": "dev"
 }

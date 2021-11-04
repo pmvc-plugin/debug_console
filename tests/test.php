@@ -1,27 +1,23 @@
 <?php
 namespace PMVC\PlugIn\debug;
 
-use PHPUnit_Framework_TestCase;
+use PMVC\TestCase;
 
-\PMVC\Load::plug();
-\PMVC\addPlugInFolders([__DIR__.'/../']);
-
-
-class DebugConsoleTest extends PHPUnit_Framework_TestCase
+class DebugConsoleTest extends TestCase
 {
     private $_plug = 'debug_console';
 
-    public function setup()
+    public function pmvc_setup()
     {
-        $debug = \PMVC\plug('debug', ['output'=>$this->_plug]);
-        \PMVC\plug('asset', ['flush'=>false]);
+        $debug = \PMVC\plug('debug', ['output' => $this->_plug]);
+        \PMVC\plug('asset', ['flush' => false]);
     }
 
-    public function teardown()
+    public function pmvc_teardown()
     {
-      \PMVC\unplug($this->_plug);
-      \PMVC\unplug('dispatcher');
-      \PMVC\unplug('debug');
+        \PMVC\unplug($this->_plug);
+        \PMVC\unplug('dispatcher');
+        \PMVC\unplug('debug');
     }
 
     function testDebugConsole()
@@ -31,7 +27,7 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
         print_r($plug);
         $output = ob_get_contents();
         ob_end_clean();
-        $this->assertContains($this->_plug,$output);
+        $this->haveString($this->_plug, $output);
     }
 
     function testDump()
@@ -42,7 +38,7 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
         $plug->onWillProcessView();
         $output = ob_get_contents();
         ob_end_clean();
-        $this->assertContains('aaa',$output);
+        $this->haveString('aaa', $output);
     }
 
     public function testDefaultLevel()
@@ -53,9 +49,9 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
 
     public function testAutoIsReady()
     {
-        $old = \PMVC\value(\PMVC\folders(_PLUGIN), ['folders']);
+        $old = \PMVC\value(\PMVC\passByRef(\PMVC\folders(_PLUGIN)), ['folders']);
         $folders = \PMVC\folders(_PLUGIN, [], [], true);
-        $p = \PMVC\plug($this->_plug, [_PLUGIN_FILE=>'./debug_console.php']);
+        $p = \PMVC\plug($this->_plug, [_PLUGIN_FILE => './debug_console.php']);
         $this->assertEquals(true, $p['isReady']);
         \PMVC\addPlugInFolders(array_reverse($old));
     }
@@ -68,9 +64,9 @@ class DebugConsoleTest extends PHPUnit_Framework_TestCase
 
     public function testDefaultIsReady()
     {
-        $old = \PMVC\value(\PMVC\folders(_PLUGIN), ['folders']);
+        $old = \PMVC\value(\PMVC\passByRef(\PMVC\folders(_PLUGIN)), ['folders']);
         $folders = \PMVC\folders(_PLUGIN, [], [], true);
-        $p = \PMVC\plug($this->_plug, [_PLUGIN_FILE=>'./debug_console.php']);
+        $p = \PMVC\plug($this->_plug, [_PLUGIN_FILE => './debug_console.php']);
         $this->assertEquals(true, $p['isReady']);
         \PMVC\addPlugInFolders(array_reverse($old));
     }
