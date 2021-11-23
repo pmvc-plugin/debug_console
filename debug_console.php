@@ -79,7 +79,7 @@ class debug_console extends p\PlugIn implements DebugDumpInterface
         $this->_flush($this);
     }
 
-    public function escape($string)
+    public function escape($string, $type = null)
     {
         if (!empty($string) && is_string($string)) {
             $pUtf8 = \PMVC\plug('utf8');
