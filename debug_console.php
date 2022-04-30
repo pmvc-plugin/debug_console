@@ -87,8 +87,8 @@ class debug_console extends p\PlugIn implements DebugDumpInterface
                 $string = $pUtf8->convertEncoding($string, 'utf-8');
             }
             // return strtr($string, array('\\'=>'\\\\',"'"=>"\'",'"'=>'\"',"\r"=>'\\r',"\n"=>'\\n','</'=>'<\/'));
-            return $string;
         }
+        return $string;
     }
 
     protected function __dump($s)
