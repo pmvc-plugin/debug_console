@@ -17,7 +17,7 @@ class debug_console extends p\PlugIn implements DebugDumpInterface
     {
         if (!isset($this['js'])) {
             $this['js'] =
-                'https://cdn.jsdelivr.net/npm/organism-react-ajax@0.6.13/build/dlog.min.js';
+                'https://cdn.jsdelivr.net/npm/organism-react-ajax@0.17.6/build/dlog.min.js';
         }
         if (\PMVC\exists('dispatcher', 'plug')) {
             $dispatcher = \PMVC\plug('dispatcher');
@@ -111,12 +111,14 @@ class debug_console extends p\PlugIn implements DebugDumpInterface
             return;
         }
 
-        $strJson = str_replace(
-            '\\',
-            '\\\\',
-            \PMVC\utf8JsonEncode($p, $this->_flag)
-        );
-        $strJson = 'JSON.parse(\'' . $strJson . '\')';
+        $strJson =
+            '\'' .
+            str_replace(
+                '\\',
+                '\u005C',
+                \PMVC\utf8JsonEncode($p, $this->_flag)
+            ) .
+            '\'';
         if (!$debug->levelToInt($type, null)) {
             $this->__dump('log.show(\'' . $type . '\',[' . $strJson . '])');
         } else {
